@@ -1,41 +1,123 @@
 @import url(style.css?aea6f0a);
 
-#chart {
-    width: 100%;
-    max-width: 800px;
-    background-color: #f7f7f7;
-}
+
 
 text {
     font: 10px sans-serif;
 }
 
-.dot {
-    stroke: #000;
-}
 
-.axis path, .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-}
+
+
 
 .label {
     fill: #777;
 }
 
-.year.label {
-    font: 500 196px "Helvetica Neue";
+.message {
+    font: 50px "Helvetica Neue";
     fill: #ddd;
 }
 
-.year.label.active {
-    fill: #aaa;
+
+/*chart format*/
+#chart {
+    width: 80%;
+    max-width: 800px;
+    background-color: #f7f7f7;
+    float: left;
+    margin: auto;
 }
 
-.overlay {
-    fill: none;
-    pointer-events: all;
-    cursor: ew-resize;
+/* Svg chart format*/
+#svgchart {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #ccc;
 }
 
+/*control format */
+#controls {
+    float: left;
+    margin: auto;
+    width: 20%;
+}
+
+/*axis format */
+
+.xaxis path, .axis line {
+    fill: none ;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.yaxis path, .axis line {
+    fill: none ;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+/*Slider format*/
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #5a6aaf;;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #5a6aaf;
+    cursor: pointer;
+}
+
+
+/*Tabs format*/
+.tab {
+    overflow: hidden;
+ //   background-color: #f1f1f1;
+}
+
+.tab button {
+    background-color: inherit;
+    border: 1px solid #ccc;
+    float: left;
+    //border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+}
+
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+
+}

@@ -5,15 +5,38 @@
     <title>Usa Health systems</title>
 </head>
 <style>
-   @import url(stylesheets/mapstyle.css);
+   @import url(/stylesheets/mapstyle.css);
 </style>
-
 <body>
 
 <h1>USA Health Systems</h1>
+<div id="chart" class="chart">
+    <div class="tab">
+    <button class="tablinks" onclick="drawData(curYear,curSetX,lifeExpCode)">1</button>
+    <button class="tablinks" onclick="drawData(curYear,curSetX,outPocketCode)">2</button>
+    <button class="tablinks" onclick="drawData(curYear,curSetX,infantCode)">3</button>
+    <button class="tablinks" onclick="drawData(curYear,curSetX,neonatalCode)">4</button>
+    <button class="tablinks" onclick="">5</button>
+</div>
+    <div id="svgchart"></div>
+</div>
 
-<div id="chart"> </div>
+<div  id="controls" class="controls">
+    <div id="slider" >
+        Year
+        <input type="range" min="2000" max="2015" value="2000" class="slider" id="yearSlider" oninput="drawData(this.value,curSetX,curSetY)">
+    </div>
+    <div id="messages"></div>
+    <div id="legend">
+        Select Legend Colors
+        <select name="legends" onchange="updateLegend(this.value)">
+            <option value="1">By Income</option>
+            <option value="2">By Region</option>
+        </select>
+    </div>
+    <div id="countryList">Choose Countries to Follow </div>
 
+</div>
 </body>
 <script src="https://d3js.org/d3.v5.js"></script>
 <script src="javascripts/ds.js"></script>
