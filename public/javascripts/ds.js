@@ -141,7 +141,7 @@ scale = d3.scaleLinear()
     .range([svgHeight-paddingBottom, paddingTop ]);
 scales.set(infantCode,scale);
 
-console.log('Start');
+//console.log('Start');
 
 
 
@@ -235,9 +235,9 @@ function createCountryList(){
             return d[1];
         });
 
-    countries.on("change",function(d){
-        console.log(d);
-    });
+    //countries.on("change",function(d){
+     //   console.log(d);
+    //});
 
 }
 function updateLegend(legendId){
@@ -298,7 +298,7 @@ function updateXAxis(dataSetX){
         .attr('class','xaxis')
         .attr("transform", "translate(0,"+(svgHeight-paddingBottom)+")")
         .call(xAxis);
-    console.log("X Axis recreated");
+    //console.log("X Axis recreated");
     curLabelX=data.values().next().value[yearsPos].get(dataSetX)[1];
 
     // Add an x-axis label.
@@ -322,7 +322,7 @@ function updateYAxis(dataSetY){
     svg.select('#ylabel').remove();
 
 
-    console.log('remove Axis Y');
+    //console.log('remove Axis Y');
 
     svg.append('g').call(yAxis)
         .attr('id','yscale')
@@ -341,7 +341,7 @@ function updateYAxis(dataSetY){
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
         .text(curLabelY);
-    console.log("Y Axis recreated");
+    //console.log("Y Axis recreated");
 }
 
 function getData(year, dataSetX, dataSetY){
@@ -385,7 +385,7 @@ function colorDef(d) {
     //colorD='Selected';
     if (selectCountries.has(d[0])){
         //console.log(d);
-        console.log(d[0]+ "->>>>>>>>>>>>>>>>>>>>>>>>>>> Selected");
+        //console.log(d[0]+ "->>>>>>>>>>>>>>>>>>>>>>>>>>> Selected");
         colorD='Selected';
     }
     //console.log(colorD)
@@ -412,7 +412,7 @@ function clearCountySelection(){
 
 function transitionData(dataSetX,dataSetY){
     clearCountySelection();
-    console.log(dataSetY);
+    //console.log(dataSetY);
     if (dataSetY == lifeExpCode) {
         selectCountry('USA');
         selectCountry('JPN');
@@ -450,7 +450,7 @@ function updateYearLabel(year){
 function drawData(year,dataSetX,dataSetY, customDur= 0){
     if ( year !== curYear || dataSetX !== curSetX || dataSetY !== curSetY ) {
 
-        console.log("diferent values");
+        //console.log("diferent values");
         curData = getData(year, dataSetX, dataSetY);
         //console.log(curData);
         if ( year !== curYear ) {
@@ -461,12 +461,12 @@ function drawData(year,dataSetX,dataSetY, customDur= 0){
         }
         if (dataSetX !== curSetX) {
             updateXAxis(dataSetX);
-            console.log("X Axis updated");
+            //console.log("X Axis updated");
            // duration=durationSet;
         }
         if (dataSetY !== curSetY) {
             updateYAxis(dataSetY);
-            console.log("Y Axis updated");
+            //console.log("Y Axis updated");
             //duration=durationSet;
         }
         if (customDur !== 0){
@@ -478,9 +478,9 @@ function drawData(year,dataSetX,dataSetY, customDur= 0){
         curSetY = dataSetY;
     }
 
-    console.log(colorScale.domain());
+   // console.log(colorScale.domain());
     if (initDraw) {
-        console.log("First Draw");
+        //console.log("First Draw");
         var countries = svg.append("g")
             .attr("class", "countries")
             .selectAll(".country")
@@ -509,8 +509,8 @@ function drawData(year,dataSetX,dataSetY, customDur= 0){
                     .duration(durationSelect);
                 x =parseFloat(d3.select(this).attr('cx'));
                 y =parseFloat(d3.select(this).attr('cy'));
-                console.log(x,y);
-                console.log(curSetX,curSetY)
+                //console.log(x,y);
+              //  console.log(curSetX,curSetY)
                 d3.select('#tooltip')
                     .style('left',x+"px")
                     .style('top',y+"px")
@@ -562,7 +562,7 @@ function drawData(year,dataSetX,dataSetY, customDur= 0){
         initDraw=false;
     }
     else {
-        console.log('Updating Graph');
+        //console.log('Updating Graph');
 
         let t =d3.transition()
             .duration(duration)
@@ -668,14 +668,6 @@ d3.json ("./data/wditablearray.json").then(function(d) {
     createCountryList();
     updateComments(initSetY);
     transitionData(initSetX,initSetY);
-    //updateLegend();
-    // console.log(curData);
-    //console.log(data);
-    //console.log(countryList);
-   // selectCountry('USA');
-    //console.log(curData[160]);
-    //selectCountry('MEX');
-   //rawData(initYear,initSetX,infantCode);
-    //unSelectCountry('MEX');
+
 
 });
