@@ -23,18 +23,20 @@ var initSetX = healthExpCode;
 
 
 var curYear;
+var startYear=initYear;
 var curSetY;
 var curSetX;
 var curLabelX;
 var curLabelY;
 var initDraw =true;
+var duration;
 
 var xScale;
 var yScale;
 var xAxis;
 var yAxis
-const xPosArray=4;
-const yPosArray=5;
+const xPosArray=5;
+const yPosArray=6;
 const yearsPos=5;
 const excludeFlagPos=4;
 
@@ -50,6 +52,7 @@ const paddingLeft =40;
 const paddingRight =15;
 const paddingTop =10;
 const paddingBottom =30;
+
 const durationSet=5000;
 const durationYear=200;
 const durationSelect=300;
@@ -57,6 +60,7 @@ const legHeight = 20;
 const legSpace =5;
 
 
+var countryList=[];
 
 var countryColorScale = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -91,7 +95,7 @@ scale = d3.scaleLinear()
 scales.set(lifeExpCode,scale);
 
 scale = d3.scaleLog()
-    .domain( [1,1500])
+    .domain( [1,2500])
     .range([svgHeight-paddingBottom, paddingTop ]);
 scales.set(outPocketCode,scale);
 
@@ -125,15 +129,18 @@ var svgmessage = control.select("#messages")
 var label=svgmessage.append("text")
     .attr("class", "message")
     .attr("text-anchor", "end")
+    .attr('fill','black')
     .attr("x", svgMessWidth)
     .attr("y", 50);
 
+var slider=d3.select("#yearSlider")
 
 var svglegend = control.select("#legend")
     .append('svg')
     .attr('viewBox','0 0 '+svgLegWidth+' '+ legHeight*colorScale.domain().length)
     .attr('preserveAspectRatio','xMidYMid')
     .classed('svgtype',true);
+
 
 var legend=svglegend
     .selectAll("g")
@@ -164,6 +171,34 @@ legend.append('text')
     });
 
 
+var countries = control.select("#countryList");
+    //.append('select')
+    //.attr('id','countrySelect');
+
+
+function createCountryList(){
+    for ( let [k, v] of data ) {
+        if (v[excludeFlagPos]) {
+            countryList.push([k, v[1]]);
+        }
+    }
+    d3.select('#countrySelect')
+        .selectAll('option')
+        .data(countryList)
+        .enter()
+        .append('option')
+        .attr('value',function (d){
+            return d[0];
+        })
+        .text(function (d){
+            return d[1];
+        });
+
+    countries.on("change",function(d){
+        console.log(d);
+    });
+
+}
 function updateLegend(legendId){
     console.log("Update Legend");
     curColor=legendId;
@@ -203,6 +238,7 @@ function updateLegend(legendId){
         .text(function(d) {
             return d;
         });
+    startYear=curYear;
     drawData(curYear,curSetX,curSetY);
 }
 
@@ -277,6 +313,7 @@ function getData(year, dataSetX, dataSetY){
             countryArray.push(v[1]);
             countryArray.push(v[2]);
             countryArray.push(v[3]);
+            countryArray.push(year);
             let datX=v[yearsPos].get(dataSetX)[0][year%2000];
             let datY=v[yearsPos].get(dataSetY)[0][year%2000];
             countryArray.push(datX);
@@ -302,7 +339,7 @@ function colorDef(d) {
     else if (curColor == regionColor) {
         colorD = d[3];
     }
-    console.log("after switch "+curColor);
+    //console.log("after switch "+curColor);
 
     //colorD='Selected';
     if (selectCountries.has(d[0])){
@@ -316,35 +353,59 @@ function colorDef(d) {
 }
 
 function selectCountry( countryCode){
+    console.log("selecting "+countryCode);
     selectCountries.set(countryCode,true);
+    startYear=curYear;
+    drawData(curYear,curSetX,curSetY);
 }
 function unSelectCountry( countryCode){
     selectCountries.delete(countryCode);
 }
 
-function drawData(year,dataSetX,dataSetY){
+function clearCountySelection(){
+    selectCountries = new Map();
+    startYear=curYear;
+    drawData(curYear,curSetX,curSetY);
+
+}
+
+function transitionData(dataSetX,dataSetY){
+    drawData(2000,dataSetX,dataSetY,durationSet);
+}
+
+function updateYearLabel(year){
+    label.text(year);
+   // console.log(slider);
+    slider.attr('value',year);
+
+}
+
+function drawData(year,dataSetX,dataSetY, customDur= 0){
     if ( year !== curYear || dataSetX !== curSetX || dataSetY !== curSetY ) {
 
         console.log("diferent values");
         curData = getData(year, dataSetX, dataSetY);
         //console.log(curData);
         if ( year !== curYear ) {
-            var duration = durationYear * Math.abs(curYear - year);
+            duration = durationYear * Math.abs(curYear - year);
             //console.log(control);
-            label.text(year);
-
+            //label.text(year);
+            updateYearLabel(year);
         }
         if (dataSetX !== curSetX) {
             updateXAxis(dataSetX);
             console.log("X Axis updated");
-            duration=durationSet;
+           // duration=durationSet;
         }
         if (dataSetY !== curSetY) {
             updateYAxis(dataSetY);
             console.log("Y Axis updated");
-            duration=durationSet;
+            //duration=durationSet;
         }
-
+        if (customDur !== 0){
+            duration=customDur;
+        }
+        startYear=curYear;
         curYear = year;
         curSetX = dataSetX;
         curSetY = dataSetY;
@@ -369,13 +430,24 @@ function drawData(year,dataSetX,dataSetY){
             .attr('r',function(d){
                 return selectCountries.has(d[0])? selectedSize:regularSize;
             })
-            .style("fill", function(d){
+            .attr('id',function(d){
+                return d[0];
+            })
+            .style("stroke", function(d){
                 return colorScale(colorDef(d));
             })
             .on("mouseover", function(d) {
                 d3.select(this).attr('r',selectedSize)
                     .transition()
                     .duration(durationSelect);
+                x =parseFloat(d3.select(this).attr('cx'));
+                y =parseFloat(d3.select(this).attr('cy'));
+                console.log(x,y);
+                d3.select('#tooltip')
+                    .style('left',x+"px")
+                    .style('top',y+"px")
+                    .style('display','block')
+                    .text(d[1]);
             })
             .on("mouseout", function(d) {
                 if (!selectCountries.has(d[0])) {
@@ -383,48 +455,85 @@ function drawData(year,dataSetX,dataSetY){
                     .transition()
                     .duration(durationSelect);
                 }
-            });;
+                d3.select( '#tooltip' )
+                    .style( 'display', 'none' )
 
-        countries.append("title")
+            })
+            ;
+
+
+
+        /*countries.append("title")
             .text(function(d) {
                 return d[1];
-            });
+            });*/
 
+        svg.append('g')
+            .attr("class","countryLabels")
+            .selectAll('#countryLabels')
+            .data(curData)
+            .enter()
+            .append('text')
+            .text (function (d){
+                if ( selectCountries.has(d[0]) ){
+                    return d[0];
+                }
+            })
+            .attr('x', function(d){
+                return xScale(d[xPosArray]);
+            })
+            .attr('y', function(d){
+                return yScale(d[yPosArray]);
+            })
+            .attr('class',"countryLabel");
         initDraw=false;
     }
     else {
         console.log('Updating Graph');
-        //console.log(curData[160]);
-        console.log("before data")
-        /*svg.selectAll('circle')
-            .data(curData)
-            .attr('fill','none');
-            .attr('class',function (d) {
-                if (selectCountries.has(d[0])){
-                    console.log("Selected");
-                    return "Selected";
+
+        let t =d3.transition()
+            .duration(duration)
+            .tween("year", function (d){
+                //   console.log(d);
+                var inter =d3.interpolateRound(startYear,year);
+                return function(t){
+                    updateYearLabel(inter(t));
                 }
-            });*/
-
-
-        /*sel = svg.selectAll('.Selected')
-            .attr("fill","red");*/
+            });
 
         svg.selectAll('circle')
             .data(curData)
-            .transition()
-            .duration(duration)
+            .transition(t)
             .attr('cx', function(d){
                 return xScale(d[xPosArray]);
             })
             .attr('cy', function(d){
                 return yScale(d[yPosArray]);
             })
-            .style("fill", function(d,i){
-                console.log(curColor);
-                console.log(d,i);
-                console.log(colorScale(colorDef(d)));
+            .attr('r',function(d){
+                return selectCountries.has(d[0])? selectedSize:regularSize;
+            })
+            .style("stroke", function(d){
                 return colorScale(colorDef(d));
+            })
+            .style("fill", function(d){
+            //return '#e41a1c';
+            return selectCountries.has(d[0])? '#e41a1c':'none';
+            });
+
+        svg.selectAll('.countryLabel')
+            .data(curData)
+            .transition(t)
+            .attr('x', function(d){
+                return xScale(d[xPosArray]);
+            })
+            .attr('y', function(d){
+                return yScale(d[yPosArray]);
+            })
+            .text (function (d){
+                if ( selectCountries.has(d[0]) ){
+                    return d[0];
+                }
             });
 
     }
@@ -481,12 +590,14 @@ function transformData(d){
 d3.json ("./data/wditablearray.json").then(function(d) {
 
     transformData(d);
-    selectCountry('USA');
+  //  selectCountry('USA');
     drawData(initYear,initSetX,initSetY);
+    createCountryList();
     //updateLegend();
     // console.log(curData);
-    console.log(data);
-    selectCountry('USA');
+    //console.log(data);
+    //console.log(countryList);
+   // selectCountry('USA');
     //console.log(curData[160]);
     //selectCountry('MEX');
    //rawData(initYear,initSetX,infantCode);

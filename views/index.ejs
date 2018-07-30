@@ -2,41 +2,50 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Usa Health systems</title>
+    <title>Health Parameters Comparison Tool</title>
 </head>
 <style>
    @import url(/stylesheets/mapstyle.css);
 </style>
 <body>
 
-<h1>USA Health Systems</h1>
+<h1>Health Parameters Comparison Tool</h1>
+
 <div id="chart" class="chart">
     <div class="tab">
-    <button class="tablinks" onclick="drawData(curYear,curSetX,lifeExpCode)">1</button>
-    <button class="tablinks" onclick="drawData(curYear,curSetX,outPocketCode)">2</button>
-    <button class="tablinks" onclick="drawData(curYear,curSetX,infantCode)">3</button>
-    <button class="tablinks" onclick="drawData(curYear,curSetX,neonatalCode)">4</button>
+    <button class="tablinks" onclick="transitionData(curSetX,lifeExpCode)">1</button>
+    <button class="tablinks" onclick="transitionData(curSetX,infantCode)">2</button>
+    <button class="tablinks" onclick="transitionData(curSetX,neonatalCode)">3</button>
+    <button class="tablinks" onclick="transitionData(curSetX,outPocketCode)">4</button>
     <button class="tablinks" onclick="">5</button>
-</div>
-    <div id="svgchart"></div>
+    </div>
+    <div id="svgchart">
+        <div id="tooltip"></div>
+    </div>
 </div>
 
 <div  id="controls" class="controls">
     <div id="slider" >
-        Year
-        <input type="range" min="2000" max="2015" value="2000" class="slider" id="yearSlider" oninput="drawData(this.value,curSetX,curSetY)">
+        Select Year
+        <input type="range" min="2000" max="2015" value="2000" class="slider" id="yearSlider" onchange="drawData(this.value,curSetX,curSetY)">
     </div>
     <div id="messages"></div>
-    <div id="legend">
-        Select Legend Colors
-        <select name="legends" onchange="updateLegend(this.value)">
+    Select Color legend
+    <div id="legend" class="legends" >
+        <select  onchange="updateLegend(this.value)">
             <option value="1">By Income</option>
             <option value="2">By Region</option>
         </select>
     </div>
-    <div id="countryList">Choose Countries to Follow </div>
+    <div id="countryList">Select Countries to Follow
+        <select  id="countrySelect" onchange="selectCountry(this.value)">
 
+        </select>
+        <button id="clearselection" onclick="clearCountySelection()">Clear Selections</button>
+    </div>
 </div>
+
+<div id=""divtext">Test</div>
 </body>
 <script src="https://d3js.org/d3.v5.js"></script>
 <script src="javascripts/ds.js"></script>

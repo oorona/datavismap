@@ -7,23 +7,42 @@ text {
 }
 
 
+#tooltip {
+    position: absolute;
+    width: 75px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #000;
+    pointer-events: none;
+    display: none;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-
+circle {
+    fill: none;
+    stroke-width: 2;
+    pointer-events: fill;
+}
 
 .label {
-    fill: #777;
+    fill: black;
 }
 
 .message {
     font: 50px "Helvetica Neue";
-    fill: #ddd;
+    fill: black;
 }
 
-
+#divtext {
+    float: none;
+}
 /*chart format*/
 #chart {
     width: 80%;
-    max-width: 800px;
+    max-width: 1000px;
     background-color: #f7f7f7;
     float: left;
     margin: auto;
@@ -34,6 +53,9 @@ text {
     border-style: solid;
     border-width: 1px;
     border-color: #ccc;
+    background-color: #bcbabc;
+    position: relative;
+
 }
 
 /*control format */
@@ -41,6 +63,7 @@ text {
     float: left;
     margin: auto;
     width: 20%;
+    //height: 400px;
 }
 
 /*axis format */
@@ -48,6 +71,7 @@ text {
 .xaxis path, .axis line {
     fill: none ;
     stroke: #000;
+    font-size: 50px;
     shape-rendering: crispEdges;
 }
 
@@ -121,3 +145,5 @@ text {
     border-top: none;
 
 }
+/*select format*/
+
