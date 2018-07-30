@@ -436,7 +436,7 @@ function transitionData(dataSetX,dataSetY){
         selectCountry('QAT');
         selectCountry('FRA');
     }
-    drawData(2000,dataSetX,dataSetY,durationSet);
+    drawData(curYear,dataSetX,dataSetY,durationSet);
     updateComments(dataSetY);
 }
 
