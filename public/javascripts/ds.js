@@ -26,15 +26,15 @@ var labelsMap = new Map([
 
 var commentsMap = new Map([
     [lifeExpCode,  "The United States is the country with the the most expensive health care system " +
-    "and it has been seen like that for the last 15 years. It important to notice that other countries like Japan " +
+    "and it has been seen like that for the last 15 years. It is important to notice that other countries like Japan " +
     "have better life expectancy and expend less money in health care. It is also obvious to see that richer countries " +
     "also have better life expectancy. The top of the graph is flat. There seems to be no extra benefit from having a " +
     "more expensive health care. It is encouraging to see how countries, like Rwanda, in the bottom of the graph can improve the life " +
     "expectancy without spending a lot of money."],
     [infantCode,"In terms of infants deaths we can see again rich countries have an advantage " +
     "but we can also see that the bottom of the graph is flat and there are no significant improvements by expending " +
-    "more money. Countries like singapore and Czech Republic have very low of infant death rates even better than those" +
-    "of The United States. See see again poor countries gaining ground. Countries such as Liberia have reduce the infant rate " +
+    "more money. Countries like singapore and Czech Republic have very low of infant death rates even better than those " +
+    "of The United States. See again poor countries gaining ground. Countries such as Liberia have reduce the infant rate " +
     "in the last few years."],
     [neonatalCode,"Neonatal rates follow a similar trend to infants deaths. We can see no benefit from the more expensive " +
     "heath care. Countries such as Estonia and Belarus have less neonatal death rates and the United States. " +
@@ -44,7 +44,7 @@ var commentsMap = new Map([
     "it also cost more for the average consumer. There seems to be a correlation between health care expenditure and out of " +
     "pocket costs. The big indicators here are The United States and Switzerland with high out of pocket costs. It is interesting " +
     "to point that both countries' health care system are insurance Based. For countries like Qatar health out of pocket expenses " +
-    "have not increased significant despite the increase of over health care cost, perhaps due to subsidy of a oil rich county." +
+    "have not increased significant despite the increase of over health care cost, perhaps due to subsidy of a oil rich county. " +
     "France is also a good indicator for the impact a national health care system has on overall costs. "]
 ]);
 
@@ -80,7 +80,7 @@ const svgMessHeight=50;
 const svgLegWidth=200;
 const svgLegHeight=150
 
-const paddingLeft =40;
+const paddingLeft =50;
 const paddingRight =15;
 const paddingTop =10;
 const paddingBottom =30;
@@ -127,7 +127,7 @@ scale = d3.scaleLinear()
 scales.set(lifeExpCode,scale);
 
 scale = d3.scaleLog()
-    .domain( [1,2500])
+    .domain( [1,3000])
     .range([svgHeight-paddingBottom, paddingTop ]);
 scales.set(outPocketCode,scale);
 

@@ -47,6 +47,7 @@ circle {
 #divtext {
     font-size: 15px;
     float: left;
+    max-width: 1000px;
 
 }
 /* Svg chart format*/
