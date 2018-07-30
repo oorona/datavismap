@@ -15,6 +15,38 @@ const selectedSize=12;
 const regularSize=7
 
 
+var labelsMap = new Map([
+    [lifeExpCode,"LifeExpec"],
+    [healthExpCode,"HealthExp"],
+    [outPocketCode,"OutPocket"],
+    [infantCode,"InfanRate"],
+    [neonatalCode,"NeonaRate"]
+]);
+
+
+var commentsMap = new Map([
+    [lifeExpCode,  "The United States is the country with the the most expensive health care system " +
+    "and it has been seen like that for the last 15 years. It important to notice that other countries like Japan " +
+    "have better life expectancy and expend less money in health care. It is also obvious to see that richer countries " +
+    "also have better life expectancy. The top of the graph is flat. There seems to be no extra benefit from having a " +
+    "more expensive health care. It is encouraging to see how countries, like Rwanda, in the bottom of the graph can improve the life " +
+    "expectancy without spending a lot of money."],
+    [infantCode,"In terms of infants deaths we can see again rich countries have an advantage " +
+    "but we can also see that the bottom of the graph is flat and there are no significant improvements by expending " +
+    "more money. Countries like singapore and Czech Republic have very low of infant death rates even better than those" +
+    "of The United States. See see again poor countries gaining ground. Countries such as Liberia have reduce the infant rate " +
+    "in the last few years."],
+    [neonatalCode,"Neonatal rates follow a similar trend to infants deaths. We can see no benefit from the more expensive " +
+    "heath care. Countries such as Estonia and Belarus have less neonatal death rates and the United States. " +
+    "Pakistan seems to have very high rates despite not being consider amount the poorest countries."
+    ],
+    [outPocketCode,"We can see that not only the over cost of the health care system in the United States is more expensive " +
+    "it also cost more for the average consumer. There seems to be a correlation between health care expenditure and out of " +
+    "pocket costs. The big indicators here are The United States and Switzerland with high out of pocket costs. It is interesting " +
+    "to point that both countries' health care system are insurance Based. For countries like Qatar health out of pocket expenses " +
+    "have not increased significant despite the increase of over health care cost, perhaps due to subsidy of a oil rich county." +
+    "France is also a good indicator for the impact a national health care system has on overall costs. "]
+]);
 
 var curColor = incomeColor;
 var initSetY = lifeExpCode;
@@ -174,6 +206,15 @@ legend.append('text')
 var countries = control.select("#countryList");
     //.append('select')
     //.attr('id','countrySelect');
+
+
+
+function updateComments(dataSetY) {
+
+    document.getElementById('divtext').innerHTML = commentsMap.get(dataSetY);
+    //e.preventDefault();
+    //return false;
+}
 
 
 function createCountryList(){
@@ -370,7 +411,33 @@ function clearCountySelection(){
 }
 
 function transitionData(dataSetX,dataSetY){
+    clearCountySelection();
+    console.log(dataSetY);
+    if (dataSetY == lifeExpCode) {
+        selectCountry('USA');
+        selectCountry('JPN');
+        selectCountry('RWA');
+    }
+    if (dataSetY == infantCode) {
+        selectCountry('USA');
+        selectCountry('SGP');
+        selectCountry('CZE');
+        selectCountry('LBR');
+    }
+    if (dataSetY == neonatalCode) {
+        selectCountry('USA');
+        selectCountry('PAK');
+        selectCountry('EST');
+        selectCountry('BLR');
+    }
+    if (dataSetY == outPocketCode) {
+        selectCountry('USA');
+        selectCountry('CHE');
+        selectCountry('QAT');
+        selectCountry('FRA');
+    }
     drawData(2000,dataSetX,dataSetY,durationSet);
+    updateComments(dataSetY);
 }
 
 function updateYearLabel(year){
@@ -443,11 +510,17 @@ function drawData(year,dataSetX,dataSetY, customDur= 0){
                 x =parseFloat(d3.select(this).attr('cx'));
                 y =parseFloat(d3.select(this).attr('cy'));
                 console.log(x,y);
+                console.log(curSetX,curSetY)
                 d3.select('#tooltip')
                     .style('left',x+"px")
                     .style('top',y+"px")
                     .style('display','block')
-                    .text(d[1]);
+                    .text("Country=\t"+d[1].substring(0,14)
+                        +"\t"+labelsMap.get(curSetX)
+                        +"=\t"+Math.round(d[xPosArray])
+                        +"\t"+labelsMap.get(curSetY)
+                        +"=\t"+Math.round(d[yPosArray]
+                ));
             })
             .on("mouseout", function(d) {
                 if (!selectCountries.has(d[0])) {
@@ -521,6 +594,7 @@ function drawData(year,dataSetX,dataSetY, customDur= 0){
             return selectCountries.has(d[0])? '#e41a1c':'none';
             });
 
+
         svg.selectAll('.countryLabel')
             .data(curData)
             .transition(t)
@@ -590,9 +664,10 @@ function transformData(d){
 d3.json ("./data/wditablearray.json").then(function(d) {
 
     transformData(d);
-  //  selectCountry('USA');
     drawData(initYear,initSetX,initSetY);
     createCountryList();
+    updateComments(initSetY);
+    transitionData(initSetX,initSetY);
     //updateLegend();
     // console.log(curData);
     //console.log(data);

@@ -9,7 +9,7 @@ text {
 
 #tooltip {
     position: absolute;
-    width: 75px;
+    width: 120px;
     padding: 10px;
     background-color: white;
     border-radius: 5px;
@@ -17,7 +17,7 @@ text {
     pointer-events: none;
     display: none;
     font-family: sans-serif;
-    font-size: 16px;
+    font-size: 10px;
     font-weight: bold;
 }
 
@@ -36,9 +36,6 @@ circle {
     fill: black;
 }
 
-#divtext {
-    float: none;
-}
 /*chart format*/
 #chart {
     width: 80%;
@@ -47,7 +44,11 @@ circle {
     float: left;
     margin: auto;
 }
+#divtext {
+    font-size: 15px;
+    float: left;
 
+}
 /* Svg chart format*/
 #svgchart {
     border-style: solid;
