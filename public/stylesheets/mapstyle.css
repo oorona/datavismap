@@ -6,11 +6,13 @@ text {
     font: 10px sans-serif;
 }
 
-
+h1 {
+    font-size: 50px;
+}
 #title {
-    font-size: 30px;
+    font-size: 40px;
     width: auto;
-    align-content: center;
+    text-align: center;
 }
 
 #tooltip {
