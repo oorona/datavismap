@@ -76,7 +76,7 @@ const excludeFlagPos=4;
 const svgWidth =800;
 const svgHeight =400;
 const svgMessWidth=200;
-const svgMessHeight=50;
+const svgMessHeight=60;
 const svgLegWidth=200;
 const svgLegHeight=150
 

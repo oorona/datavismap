@@ -26,7 +26,7 @@
 <div  id="controls" class="controls">
     <div id="slider" >
         Select Year
-        <input type="range" min="2000" max="2015" value="2000" class="slider" id="yearSlider" onchange="drawData(this.value,curSetX,curSetY)">
+        <input type="range" min="2000" max="2015" value="2000" class="slider" id="yearSlider" oninput="drawData(this.value,curSetX,curSetY)">
     </div>
     <div id="messages"></div>
     Select Color legend
