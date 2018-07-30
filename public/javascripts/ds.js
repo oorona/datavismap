@@ -48,6 +48,13 @@ var commentsMap = new Map([
     "France is also a good indicator for the impact a national health care system has on overall costs. "]
 ]);
 
+var titleMap = new Map([
+    [lifeExpCode, "Life Expectancy Vs Cost"],
+    [infantCode," Infant Death Rates Vs Cost"],
+    [neonatalCode,"Neonatal Death Rates Vs Cost"],
+    [outPocketCode,"Out of Pocket Expenses Vs Cost"]
+]);
+
 var curColor = incomeColor;
 var initSetY = lifeExpCode;
 var initSetX = healthExpCode;
@@ -216,6 +223,13 @@ function updateComments(dataSetY) {
     //return false;
 }
 
+
+function updateTitle(dataSetY) {
+
+    document.getElementById('title').innerHTML = titleMap.get(dataSetY);
+    //e.preventDefault();
+    //return false;
+}
 
 function createCountryList(){
     for ( let [k, v] of data ) {
@@ -445,6 +459,7 @@ function transitionData(dataSetX,dataSetY){
     }
     drawData(curYear,dataSetX,dataSetY,durationSet);
     updateComments(dataSetY);
+    updateTitle(dataSetY)
     createCountryList();
 }
 

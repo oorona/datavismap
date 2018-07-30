@@ -7,6 +7,12 @@ text {
 }
 
 
+#title {
+    font-size: 30px;
+    width: auto;
+    align-content: center;
+}
+
 #tooltip {
     position: absolute;
     width: 120px;
@@ -31,6 +37,8 @@ circle {
     fill: black;
 }
 
+
+
 .message {
     font: 50px "Helvetica Neue";
     fill: black;
@@ -48,7 +56,6 @@ circle {
     font-size: 15px;
     float: left;
     width: 1000px;
-
 }
 /* Svg chart format*/
 #svgchart {
