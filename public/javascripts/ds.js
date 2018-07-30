@@ -132,7 +132,7 @@ scale = d3.scaleLog()
 scales.set(outPocketCode,scale);
 
 scale = d3.scaleLinear()
-    .domain( [0,60])
+    .domain( [0,65])
     .range([svgHeight-paddingBottom, paddingTop ]);
 scales.set(neonatalCode,scale);
 
@@ -223,6 +223,8 @@ function createCountryList(){
             countryList.push([k, v[1]]);
         }
     }
+    d3.select('#countrySelect').selectAll('option').remove();
+
     d3.select('#countrySelect')
         .selectAll('option')
         .data(countryList)
@@ -230,6 +232,11 @@ function createCountryList(){
         .append('option')
         .attr('value',function (d){
             return d[0];
+        })
+        .attr('selected', function (d){
+            if (d[0] =='USA' ){
+            return "selected";
+            }
         })
         .text(function (d){
             return d[1];
@@ -438,6 +445,7 @@ function transitionData(dataSetX,dataSetY){
     }
     drawData(curYear,dataSetX,dataSetY,durationSet);
     updateComments(dataSetY);
+    createCountryList();
 }
 
 function updateYearLabel(year){
