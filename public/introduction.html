@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1><strong>Narrative Visualization to Compare Health Care Costs around the world</strong></h1>
+<p>By Oswaldo Orona</p>
+<h2><strong>Introduction</strong></h2>
+<p>This the final project for the course CS 498: Data Visualization.</p>
+<p>This interactive Slide show is created using JavaScript, html, CSS and d3 libraries. Data was taken from the WDI database provided by the world data bank. With this interactive slide show I&rsquo;m trying to show how the United States health care system is the most expensive in the world without getting any real benefits in comparison with other models and countries. The visualization focuses on the following items</p>
+<ul>
+    <li>An overall comparison of average life expectancy vs Health cost. The focus of this part of the presentation is how there are many other countries that have better life expectancy vs the United states.</li>
+    <li>The second and third slides focus mainly on the death rate of both infants, babies less than 1 year of age, and neonatal rates for babies less than 90 days old.</li>
+    <li>The final slide is mainly focus on the how much that really cost that to families by showing the out of pocket expense.</li>
+</ul>
+<h2><strong>Data</strong></h2>
+<p>Data was collected from the WDI website and it was transformed using multiple methods of data manipulation using mainly shell scripting and formatted into a compact Jason file. The file has the familiar structure of a database with multiple columns and values normalized to reduce size and thus data loading time. Once the data is loaded into the application it is transform again one more time to make it more suitable for displaying. Given the nature of the multiple parameters and datasets the data also must be filter out and move in and out of the visualization. All this manipulation is done using commonly used data structures such, array and data maps for efficiency. I only include 15 years&rsquo; worth of data because older dates do not include reliable sources or data is too sparse for a good analysis.</p>
+<h2><strong>Interactive Slide Show </strong></h2>
+<p>This visualization follows an Interactive Slide Show structure. There are 4 main scenes the user can walk through and interact with the data at each level. The Slide show maintains visual consistency on each scene by keeping all the elements on the same area and using the same style sheets and presentation.&nbsp; User can interact at each level before moving to the next level. This interactive slide show is constructed using parameters and triggers that give the user flexibility to analyze the data on each scene.</p>
+<h2><strong>Scenes</strong></h2>
+<p>Each scene presents the user with one snapshot of data for analysis and consideration. A brief explanation is given for some of the mayor countries of interest. The user can then decide to play the scene by moving through the year and seeing how the highlighted countries evolve. Users can add more countries to the analysis or clear the selection and select their own countries of interest. User can also label the data based on 2 main categories. The first categorization is done based on country income level and the second is done based of the geographic area of the country.</p>
+<h2><strong>Annotations</strong></h2>
+<p>Annotations are used along the X and Y axis and are adjusted according to the dataset and the scale that best represent the data. This interactive slide show includes tooltips that the user can explode by selecting any point on the graph. Each Country selected for analysis is label with a small 3 digits code that follow the country in the visualization.</p>
+<h2><strong>Parameters</strong></h2>
+<p>This project includes 2 main parameters. The first allows the user to display the data for a specific date between 2000 and 2015. The second main parameter allows the user to add and remove countries from selection in the graph.</p>
+<h2><strong>Triggers</strong></h2>
+<p>The main triggers are along the main navigation path for the user but also when the user select a year from the slide bar, when the user select new categorization and includes or removes countries from selection list.</p>
+<p><strong>&nbsp;</strong></p>
+</body>
+</html>
